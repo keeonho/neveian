@@ -65,7 +65,7 @@ img{display:block;max-width:100%}
 .hero-title .scr{font-size:clamp(2.4rem,11vw,5rem);writing-mode:vertical-rl;margin-top:30%}
 .hero-lotus{position:absolute;left:-6%;bottom:-2%;width:min(58vw,360px);z-index:2}
 .plum{position:absolute;right:-4%;top:-2%;width:min(70vw,460px);z-index:1;opacity:.9}
-.hero-cta{position:absolute;left:var(--gutter);bottom:calc(max(26px,4dvh) + 70px);z-index:4;display:inline-flex;gap:10px;align-items:center;text-decoration:none;background:var(--magenta);color:#fff;
+.hero-cta{position:absolute;left:var(--gutter);bottom:calc(max(26px,4dvh) + 120px);z-index:4;display:inline-flex;gap:10px;align-items:center;text-decoration:none;background:var(--magenta);color:#fff;
   padding:13px 22px;border-radius:999px;font-weight:800;box-shadow:0 6px 0 var(--plum),var(--soft);transition:translate .2s,box-shadow .2s}
 .hero-cta:hover{translate:0 -2px}
 .hero-cta:active{translate:0 4px;box-shadow:0 2px 0 var(--plum)}
@@ -149,6 +149,8 @@ img{display:block;max-width:100%}
   font-family:"Nunito Sans",sans-serif;font-weight:800;font-size:clamp(.8rem,3.2vw,.98rem);line-height:1.2;text-align:right;color:var(--magenta);opacity:.55;
   text-shadow:0 0 6px #fff,0 0 2px #fff}
 @media (prefers-reduced-motion:reduce){ .spin,.sway{animation:none} }
+
+@media (max-width:560px){ .player{bottom:calc(max(12px,env(safe-area-inset-bottom)) + 46px)} }
 </style>
 </head>
 <body>
@@ -168,7 +170,7 @@ img{display:block;max-width:100%}
     <span class="vinyl" aria-hidden="true"></span><span><b>ICONIC HEART</b><small>Hearts2Hearts</small></span><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>
   </button>
 </div>
-<div class="wmark" aria-hidden="true">made with love by<br>@listsfsrobot</div>
+<div class="wmark" aria-hidden="true">Made with love by @listsfsrobot<br>- @listbotfoocl</div>
 
 <div id="intro" aria-hidden="true">
   <span class="ripple"></span><span class="ripple"></span><span class="ripple"></span>
