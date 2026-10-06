@@ -133,9 +133,6 @@ img{display:block;max-width:100%}
 .o-lotus{position:absolute;bottom:-3%;width:min(40vw,240px)}
 
 .player{position:fixed;left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom));z-index:95;display:grid;gap:8px;justify-items:start}
-.mini{width:min(50vw,210px);aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:3px solid #fff;box-shadow:var(--soft);background:#000}
-.mini,.mini[hidden]{display:block;position:fixed;right:0;bottom:0;width:2px;height:2px;opacity:0;pointer-events:none;border:0;box-shadow:none;overflow:hidden}
-.mini iframe{width:100%;height:100%;display:block;border:0}
 .play-btn{display:flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border:0;border-radius:999px;background:rgba(255,255,255,.92);color:var(--plum);cursor:pointer;
   font:inherit;box-shadow:0 6px 18px rgba(138,45,82,.25);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .play-btn:focus-visible{outline:3px solid var(--magenta);outline-offset:3px}
@@ -166,7 +163,7 @@ img{display:block;max-width:100%}
 </defs></svg>
 <canvas id="petals" aria-hidden="true"></canvas>
 <div class="player" id="player">
-  <div class="mini" id="mini" hidden><div id="yt"></div></div>
+  <audio id="song" src="audio/iconic-heart.m4a" preload="auto" loop></audio>
   <button class="play-btn" id="playBtn" type="button" aria-pressed="false" aria-label="Play ICONIC HEART by Hearts2Hearts">
     <span class="vinyl" aria-hidden="true"></span><span><b>ICONIC HEART</b><small>Hearts2Hearts</small></span><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>
   </button>
@@ -346,27 +343,16 @@ if (!reduce) {
       onComplete: function () { this.targets().forEach((el, i) => gsap.to(el.querySelector(".disc"), { y: -6, duration: 2 + (i % 3) * 0.4, ease: "sine.inOut", yoyo: true, repeat: -1 })); } }) });
 }
 
-/* ---------- music: ICONIC HEART, streamed from YouTube (lyric video, official audio as fallback) ---------- */
+/* ---------- music: ICONIC HEART, starts on the "tap to enter" tap ---------- */
 (function music() {
-  const VIDS = ["3VE0ZMXCvhs", "A9EpZWrQ3dM"];
-  const box = $("#player"), btn = $("#playBtn"), mini = $("#mini"), icon = btn.querySelector("use");
-  let yt = null, ok = false, wantPlay = false, vi = 0;
+  const song = $("#song"), box = $("#player"), btn = $("#playBtn"), icon = btn.querySelector("use");
+  song.volume = 0.8;
   const setUI = on => { box.classList.toggle("on", on); btn.setAttribute("aria-pressed", on); icon.setAttribute("href", on ? "#i-pause" : "#i-play");
     btn.setAttribute("aria-label", (on ? "Pause" : "Play") + " ICONIC HEART by Hearts2Hearts"); };
-  window.onYouTubeIframeAPIReady = () => {
-    yt = new YT.Player("yt", { videoId: VIDS[0], playerVars: { playsinline: 1, rel: 0, modestbranding: 1 },
-      events: {
-        onReady: () => { ok = true; if (wantPlay) yt.playVideo(); },
-        onStateChange: e => setUI(e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.BUFFERING),
-        onError: () => { if (++vi < VIDS.length) yt.loadVideoById(VIDS[vi]); },
-      } });
-  };
-  const sc = document.createElement("script"); sc.src = "https://www.youtube.com/iframe_api"; document.head.appendChild(sc);
-  window.startSong = () => { wantPlay = true; if (ok) yt.playVideo(); };
-  btn.addEventListener("click", () => {
-    if (!ok) return window.startSong();
-    yt.getPlayerState() === YT.PlayerState.PLAYING ? yt.pauseVideo() : yt.playVideo();
-  });
+  song.addEventListener("play", () => setUI(true));
+  song.addEventListener("pause", () => setUI(false));
+  window.startSong = () => song.play().catch(() => {});
+  btn.addEventListener("click", () => (song.paused ? window.startSong() : song.pause()));
 })();
 document.fonts && document.fonts.ready.then(() => ScrollTrigger.refresh());
 </script>
