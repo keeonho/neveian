@@ -127,6 +127,22 @@ img{display:block;max-width:100%}
 #outro .scr{font-size:clamp(2.4rem,10vw,3.8rem)}
 .o-lotus{position:absolute;bottom:-3%;width:min(40vw,240px)}
 
+.player{position:fixed;left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom));z-index:95;display:grid;gap:8px;justify-items:start}
+.mini{width:min(50vw,210px);aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:3px solid #fff;box-shadow:var(--soft);background:#000}
+.mini[hidden]{display:none}
+.mini iframe{width:100%;height:100%;display:block;border:0}
+.play-btn{display:flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border:0;border-radius:999px;background:rgba(255,255,255,.92);color:var(--plum);cursor:pointer;
+  font:inherit;box-shadow:0 6px 18px rgba(138,45,82,.25);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.play-btn:focus-visible{outline:3px solid var(--magenta);outline-offset:3px}
+.vinyl{width:38px;height:38px;border-radius:50%;flex:none;background:radial-gradient(circle,var(--magenta) 0 18%,#fff 19% 23%,#2a1520 24% 100%);
+  box-shadow:inset 0 0 0 3px #3b2030,inset 0 0 0 7px #2a1520,inset 0 0 0 8px #4a2a3a}
+.player.on .vinyl{animation:spin 2.4s linear infinite}
+.play-btn b{display:block;font-weight:800;font-size:.82rem;letter-spacing:.04em;line-height:1.1;text-align:left}
+.play-btn small{display:block;font-size:.72rem;opacity:.75;text-align:left}
+.play-btn .ic{font-size:20px;color:var(--magenta)}
+.player.nudge .play-btn{animation:nudge 1.6s ease-in-out 3}
+@keyframes nudge{0%,100%{scale:1}50%{scale:1.08}}
+@media (prefers-reduced-motion:reduce){ .player.on .vinyl,.player.nudge .play-btn{animation:none} }
 .wmark{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));z-index:96;pointer-events:none;user-select:none;
   font-family:"Nunito Sans",sans-serif;font-weight:800;font-size:clamp(.8rem,3.2vw,.98rem);line-height:1.2;text-align:right;color:var(--magenta);opacity:.55;
   text-shadow:0 0 6px #fff,0 0 2px #fff}
@@ -134,7 +150,7 @@ img{display:block;max-width:100%}
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-flower-lotus" viewBox="0 0 256 256" fill="currentColor"><path d="M245.83,121.63a15.53,15.53,0,0,0-9.52-7.33,73.55,73.55,0,0,0-22.17-2.22c4-19.85,1-35.55-2-44.86a16.17,16.17,0,0,0-18.8-10.88,85.53,85.53,0,0,0-28.55,12.12,94.58,94.58,0,0,0-27.11-33.25,16.05,16.05,0,0,0-19.26,0A94.58,94.58,0,0,0,91.26,68.46,85.53,85.53,0,0,0,62.71,56.34,16.14,16.14,0,0,0,43.92,67.22c-3,9.31-6,25-2.06,44.86a73.55,73.55,0,0,0-22.17,2.22,15.53,15.53,0,0,0-9.52,7.33,16,16,0,0,0-1.6,12.26c3.39,12.58,13.8,36.49,45.33,55.33S113.13,208,128.05,208s42.67,0,74-18.78c31.53-18.84,41.94-42.75,45.33-55.33A16,16,0,0,0,245.83,121.63ZM62.1,175.49C35.47,159.57,26.82,140.05,24,129.7a59.61,59.61,0,0,1,22.5-1.17,129.08,129.08,0,0,0,9.15,19.41,142.28,142.28,0,0,0,34,39.56A114.92,114.92,0,0,1,62.1,175.49ZM128,190.4c-9.33-6.94-32-28.23-32-71.23C96,76.7,118.38,55.24,128,48c9.62,7.26,32,28.72,32,71.19C160,162.17,137.33,183.46,128,190.4Zm104-60.68c-2.77,10.24-11.4,29.81-38.09,45.77a114.92,114.92,0,0,1-27.55,12,142.28,142.28,0,0,0,34-39.56,129.08,129.08,0,0,0,9.15-19.41A59.69,59.69,0,0,1,232,129.71Z"/></symbol><symbol id="i-telegram-logo" viewBox="0 0 256 256" fill="currentColor"><path d="M228.88,26.19a9,9,0,0,0-9.16-1.57L17.06,103.93a14.22,14.22,0,0,0,2.43,27.21L72,141.45V200a15.92,15.92,0,0,0,10,14.83,15.91,15.91,0,0,0,17.51-3.73l25.32-26.26L165,220a15.88,15.88,0,0,0,10.51,4,16.3,16.3,0,0,0,5-.79,15.85,15.85,0,0,0,10.67-11.63L231.77,35A9,9,0,0,0,228.88,26.19ZM175.53,208,92.85,135.5l119-85.29Z"/></symbol></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-flower-lotus" viewBox="0 0 256 256" fill="currentColor"><path d="M245.83,121.63a15.53,15.53,0,0,0-9.52-7.33,73.55,73.55,0,0,0-22.17-2.22c4-19.85,1-35.55-2-44.86a16.17,16.17,0,0,0-18.8-10.88,85.53,85.53,0,0,0-28.55,12.12,94.58,94.58,0,0,0-27.11-33.25,16.05,16.05,0,0,0-19.26,0A94.58,94.58,0,0,0,91.26,68.46,85.53,85.53,0,0,0,62.71,56.34,16.14,16.14,0,0,0,43.92,67.22c-3,9.31-6,25-2.06,44.86a73.55,73.55,0,0,0-22.17,2.22,15.53,15.53,0,0,0-9.52,7.33,16,16,0,0,0-1.6,12.26c3.39,12.58,13.8,36.49,45.33,55.33S113.13,208,128.05,208s42.67,0,74-18.78c31.53-18.84,41.94-42.75,45.33-55.33A16,16,0,0,0,245.83,121.63ZM62.1,175.49C35.47,159.57,26.82,140.05,24,129.7a59.61,59.61,0,0,1,22.5-1.17,129.08,129.08,0,0,0,9.15,19.41,142.28,142.28,0,0,0,34,39.56A114.92,114.92,0,0,1,62.1,175.49ZM128,190.4c-9.33-6.94-32-28.23-32-71.23C96,76.7,118.38,55.24,128,48c9.62,7.26,32,28.72,32,71.19C160,162.17,137.33,183.46,128,190.4Zm104-60.68c-2.77,10.24-11.4,29.81-38.09,45.77a114.92,114.92,0,0,1-27.55,12,142.28,142.28,0,0,0,34-39.56,129.08,129.08,0,0,0,9.15-19.41A59.69,59.69,0,0,1,232,129.71Z"/></symbol><symbol id="i-music-notes" viewBox="0 0 256 256" fill="currentColor"><path d="M212.92,17.71a7.89,7.89,0,0,0-6.86-1.46l-128,32A8,8,0,0,0,72,56V166.1A36,36,0,1,0,88,196V102.25l112-28V134.1A36,36,0,1,0,216,164V24A8,8,0,0,0,212.92,17.71Z"/></symbol><symbol id="i-pause" viewBox="0 0 256 256" fill="currentColor"><path d="M216,48V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V48a16,16,0,0,1,16-16h40A16,16,0,0,1,216,48ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Z"/></symbol><symbol id="i-play" viewBox="0 0 256 256" fill="currentColor"><path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/></symbol><symbol id="i-telegram-logo" viewBox="0 0 256 256" fill="currentColor"><path d="M228.88,26.19a9,9,0,0,0-9.16-1.57L17.06,103.93a14.22,14.22,0,0,0,2.43,27.21L72,141.45V200a15.92,15.92,0,0,0,10,14.83,15.91,15.91,0,0,0,17.51-3.73l25.32-26.26L165,220a15.88,15.88,0,0,0,10.51,4,16.3,16.3,0,0,0,5-.79,15.85,15.85,0,0,0,10.67-11.63L231.77,35A9,9,0,0,0,228.88,26.19ZM175.53,208,92.85,135.5l119-85.29Z"/></symbol></svg>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <linearGradient id="lotusG" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff8fb"/><stop offset=".55" stop-color="#fbd0e1"/><stop offset="1" stop-color="#e5578f"/></linearGradient>
   <linearGradient id="lotusB" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fde7ef"/><stop offset="1" stop-color="#f3a3c2"/></linearGradient>
@@ -144,6 +160,12 @@ img{display:block;max-width:100%}
   <symbol id="keyring" viewBox="0 0 400 400"><circle cx="200" cy="200" r="170" fill="none" stroke="#f5ecd0" stroke-width="40"/><circle cx="200" cy="200" r="190" fill="none" stroke="#d63f7f" stroke-width="3"/><circle cx="200" cy="200" r="150" fill="none" stroke="#d63f7f" stroke-width="3"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(0.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(12.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(24.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(36.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(48.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(60.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(72.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(84.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(96.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(108.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(120.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(132.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(144.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(156.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(168.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(180.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(192.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(204.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(216.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(228.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(240.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(252.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(264.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(276.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(288.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(300.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(312.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(324.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(336.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/><path fill="none" stroke="#d63f7f" stroke-width="2.6" stroke-linecap="square" transform="rotate(348.00 200 200) translate(200 30)" d="M-15 13 V-13 H13 V9 H-7 V-6 H6 V2"/></symbol>
 </defs></svg>
 <canvas id="petals" aria-hidden="true"></canvas>
+<div class="player" id="player">
+  <div class="mini" id="mini" hidden><div id="yt"></div></div>
+  <button class="play-btn" id="playBtn" type="button" aria-pressed="false" aria-label="Play ICONIC HEART by Hearts2Hearts">
+    <span class="vinyl" aria-hidden="true"></span><span><b>ICONIC HEART</b><small>Hearts2Hearts</small></span><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>
+  </button>
+</div>
 <div class="wmark" aria-hidden="true">made with love by<br>@listsfsrobot</div>
 
 <div id="intro" aria-hidden="true">
@@ -308,6 +330,30 @@ if (!reduce) {
     onEnter: els => gsap.from(els, { y: 90, opacity: 0, scale: 0.8, duration: 1.1, ease: "back.out(1.6)", stagger: 0.09,
       onComplete: function () { this.targets().forEach((el, i) => gsap.to(el.querySelector(".disc"), { y: -6, duration: 2 + (i % 3) * 0.4, ease: "sine.inOut", yoyo: true, repeat: -1 })); } }) });
 }
+
+/* ---------- music: ICONIC HEART (official MV embed from SMTOWN, starts on tap) ---------- */
+(function music() {
+  const VID = "chl0R8C4NJ8";
+  const box = $("#player"), btn = $("#playBtn"), mini = $("#mini"), icon = btn.querySelector("use");
+  let yt = null, wantPlay = false;
+  const setUI = on => { box.classList.toggle("on", on); btn.setAttribute("aria-pressed", on); icon.setAttribute("href", on ? "#i-pause" : "#i-play");
+    btn.setAttribute("aria-label", (on ? "Pause" : "Play") + " ICONIC HEART by Hearts2Hearts"); };
+  function create() {
+    mini.hidden = false;
+    yt = new YT.Player("yt", { videoId: VID, playerVars: { autoplay: 1, playsinline: 1, rel: 0, modestbranding: 1 },
+      events: { onReady: e => { if (wantPlay) e.target.playVideo(); },
+                onStateChange: e => setUI(e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.BUFFERING) } });
+  }
+  btn.addEventListener("click", () => {
+    box.classList.remove("nudge");
+    if (yt && yt.getPlayerState) { yt.getPlayerState() === YT.PlayerState.PLAYING ? yt.pauseVideo() : yt.playVideo(); return; }
+    wantPlay = true;
+    if (window.YT && YT.Player) return create();
+    window.onYouTubeIframeAPIReady = create;
+    const s = document.createElement("script"); s.src = "https://www.youtube.com/iframe_api"; document.head.appendChild(s);
+  });
+  setTimeout(() => !yt && box.classList.add("nudge"), 5200);
+})();
 document.fonts && document.fonts.ready.then(() => ScrollTrigger.refresh());
 </script>
 </body>
